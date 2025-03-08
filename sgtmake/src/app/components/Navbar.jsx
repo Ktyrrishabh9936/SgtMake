@@ -15,19 +15,19 @@ const Navbar = () => {
       </div>
 
       <ul className="hidden md:flex gap-6 text-gray-900 ">
-        <li className="group relative cursor-pointer">
+        <li className="group relative cursor-pointer hover:text-orange-500 transition-all ">
           <Link href="/products">Products</Link>
         </li>
-        <li className="group relative cursor-pointer">
+        <li className="group relative cursor-pointer hover:text-orange-500 transition-all ">
           <Link href="/services">Services</Link>
         </li>
-        <li className="cursor-pointer">
+        <li className="cursor-pointer hover:text-orange-500 transition-all ">
           <Link href="/about">About Us</Link>
         </li>
-        <li className="cursor-pointer">
+        <li className="cursor-pointer hover:text-orange-500 transition-all ">
           <Link href="/contact">Contact Us</Link>
         </li>
-        <li className="cursor-pointer">
+        <li className="cursor-pointer hover:text-orange-500 transition-all">
           <Link href="/support">Support</Link>
         </li>
       </ul>
