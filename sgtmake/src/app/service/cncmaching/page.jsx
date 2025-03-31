@@ -19,6 +19,11 @@ export default function CNCOrderForm() {
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
   const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
+  const handleSubmit = () => {
+    const collectedData = { selectedTab, material, surfaceFinish, quantity, remarks, file };
+    console.log('Submitted Data:', collectedData);
+  };
+
   return (
     <>
     <Navbar/>
@@ -93,7 +98,6 @@ export default function CNCOrderForm() {
         </div>
       </div>
 
-      
       <div className="mb-4">
         <p className="font-medium mb-2">Remarks</p>
         <textarea
@@ -105,8 +109,7 @@ export default function CNCOrderForm() {
         ></textarea>
       </div>
 
-     
-      <button className="bg-orange-500 text-white w-full py-2 rounded-md text-sm font-medium">Add to Cart</button>
+      <button className="bg-orange-500 text-white w-full py-2 rounded-md text-sm font-medium" onClick={handleSubmit}>Add to Cart</button>
     </div>
     </>
   );

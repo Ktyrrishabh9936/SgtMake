@@ -40,9 +40,18 @@ function WireOptions({ sizes, colors, lengths }) {
   const [length, setLength] = useState(null);
   const [remarks, setRemarks] = useState("");
 
+  const handleAddToCart = () => {
+    const selectedData = {
+      size,
+      color,
+      length,
+      remarks,
+    };
+    console.log("Added to Cart:", selectedData);
+  };
+
   return (
     <div>
-     
       <div className="border-t pt-4">
         <h3 className="font-semibold">Size</h3>
         <div className="flex space-x-2 mt-2">
@@ -57,6 +66,7 @@ function WireOptions({ sizes, colors, lengths }) {
           ))}
         </div>
       </div>
+
       <div className="border-t pt-4">
         <h3 className="font-semibold">Color</h3>
         <div className="grid grid-cols-4 gap-2 mt-2">
@@ -71,6 +81,7 @@ function WireOptions({ sizes, colors, lengths }) {
           ))}
         </div>
       </div>
+
       <div className="border-t pt-4">
         <h3 className="font-semibold">Length (m)</h3>
         <div className="flex space-x-2 mt-2">
@@ -85,6 +96,7 @@ function WireOptions({ sizes, colors, lengths }) {
           ))}
         </div>
       </div>
+
       <div className="border-t pt-4">
         <h3 className="font-semibold">Remarks</h3>
         <textarea
@@ -94,7 +106,13 @@ function WireOptions({ sizes, colors, lengths }) {
           onChange={(e) => setRemarks(e.target.value)}
         />
       </div>
-      <button className="mt-4 px-4 py-2 bg-orange-500 text-white rounded">Add to Cart</button>
+
+      <button
+        className="mt-4 px-4 py-2 bg-orange-500 text-white rounded"
+        onClick={handleAddToCart}
+      >
+        Add to Cart
+      </button>
     </div>
   );
 }

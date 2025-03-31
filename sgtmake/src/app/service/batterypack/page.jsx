@@ -6,8 +6,40 @@ import Navbar from '../../components/Navbar';
 
 export default function BatteryPackForm() {
     const [file, setFile] = useState(null);
+    const [formData, setFormData] = useState({
+        chemistry: '',
+        cellBrand: '',
+        seriesConfig: '',
+        parallelConfig: '',
+        normalDischarge: '',
+        peakDischarge: '',
+        charging: '',
+        lifeCycle: '',
+        packVoltage: '',
+        bmsChoice: '',
+        modulusCount: '',
+        dimensions: { H: '', W: '', L: '' },
+        additionalInfo: ''
+    });
 
     const handleFileUpload = (e) => setFile(e.target.files[0]);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+    
+    const handleDimensionChange = (e, dim) => {
+        const { value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            dimensions: { ...prev.dimensions, [dim]: value }
+        }));
+    };
+
+    const handleSubmit = () => {
+        const collectedData = { ...formData, file };
+        console.log('Submitted Data:', collectedData);
+    };
 
     return (
         <>
@@ -30,19 +62,25 @@ export default function BatteryPackForm() {
                         <label className="block font-medium">Chemistry</label>
                         <div className="flex gap-2 mt-1">
                             {['NCM', 'NCA', 'LifePO4', 'LIPO'].map((type) => (
-                                <button key={type} className="px-3 py-1 border rounded-md text-sm">{type}</button>
+                                <button 
+                                    key={type} 
+                                    className={`px-3 py-1 border rounded-md text-sm ${formData.chemistry === type ? 'bg-orange-500 text-white' : ''}`}
+                                    onClick={() => setFormData(prev => ({ ...prev, chemistry: type }))}
+                                >
+                                    {type}
+                                </button>
                             ))}
                         </div>
                     </div>
                     <div>
                         <label className="block font-medium">Cell Brand</label>
-                        <input type="text" className="w-full border p-2 rounded-md mt-1" placeholder="Write here" />
+                        <input name="cellBrand" type="text" className="w-full border p-2 rounded-md mt-1" placeholder="Write here" onChange={handleChange} />
                     </div>
                     
-                    {['Battery Series Config.(2S-200S)', 'Battery Parallel Config.(1Ah-1000Ah)', 'Normal Discharge Required', 'Peak Discharge Required', 'Charging', 'Life-cycle Expantency', 'Pack Voltage Nominal', 'BMS of Choice', 'No. of Modulus'].map((field, index) => (
+                    {['seriesConfig', 'parallelConfig', 'normalDischarge', 'peakDischarge', 'charging', 'lifeCycle', 'packVoltage', 'bmsChoice', 'modulusCount'].map((field, index) => (
                         <div key={index}>
-                            <label className="block font-medium">{field}</label>
-                            <input type="text" className="w-full border p-2 rounded-md mt-1" placeholder="Write here" />
+                            <label className="block font-medium">{field.replace(/([A-Z])/g, ' $1').trim()}</label>
+                            <input name={field} type="text" className="w-full border p-2 rounded-md mt-1" placeholder="Write here" onChange={handleChange} />
                         </div>
                     ))}
                     
@@ -50,7 +88,7 @@ export default function BatteryPackForm() {
                         <label className="block font-medium">Dimensions (mm)</label>
                         <div className="flex gap-2 mt-1">
                             {['H', 'W', 'L'].map((dim) => (
-                                <input key={dim} type="text" className="w-1/3 border p-2 rounded-md" placeholder={dim} />
+                                <input key={dim} type="text" className="w-1/3 border p-2 rounded-md" placeholder={dim} onChange={(e) => handleDimensionChange(e, dim)} />
                             ))}
                         </div>
                     </div>
@@ -58,10 +96,10 @@ export default function BatteryPackForm() {
                 
                 <div className="mt-4">
                     <label className="block font-medium">Additional Information</label>
-                    <textarea className="w-full border p-2 rounded-md mt-1" placeholder="Write here" rows="3"></textarea>
+                    <textarea name="additionalInfo" className="w-full border p-2 rounded-md mt-1" placeholder="Write here" rows="3" onChange={handleChange}></textarea>
                 </div>
                 
-                <button className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600">Submit</button>
+                <button className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600" onClick={handleSubmit}>Submit</button>
             </div>
         </>
     );
